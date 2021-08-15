@@ -1,0 +1,77 @@
+.content {
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/map.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.header {
+    width: 100%;
+    height: 102px;
+    background: #1c1a19;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    padding-left: 27px;
+}
+.logo_svg {
+    width: 61px;
+    height: 61px;
+}
+.logo__title {
+    padding-left: 16px;
+}
+.text_white {
+    font-family: UA_Blade_Runner;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 36px;
+    color: #ffffff;
+}
+.text_black {
+    font-family: UA_Blade_Runner;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 36px;
+    color: #fdbf5a;
+}
+.nav {
+    margin-right: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.nav_btn {
+    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 25px;
+    color: white;
+    padding: 0;
+    margin: 0;
+    border-color: transparent;
+    margin-right: 50px;
+    background: none;
+    &:hover{
+        color:#b6d40b;
+    }
+
+    &:last-child{
+        margin-right: 0;
+    }
+    &.active {
+        color: #fdbf5a;
+    }
+}
+.main_content__container{
+    width: 100%;
+    height: calc(100% - 102px);
+}
