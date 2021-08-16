@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import classNames from "classnames";
 import styles from "./Registration.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -28,14 +28,7 @@ const Registration = ({ changeAuthStatus, changeEnterStatus }) => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [btnStyle, setBtnStyle] = useState("");
-    useEffect(() => {
-        if (email.length !== 0 && password.length !== 0 && name.langth !== 0) {
-            setBtnStyle(`${styles.btn}`);
-        } else {
-            setBtnStyle(`${styles.btn} ${styles.disabled}`);
-        }
-    }, [email, password, name]);
+    const StyledButton = classNames(styles.btn, {[styles.disabled]: name.length === 0 || email.length === 0 || password.length === 0})
     return (
         <div className={styles.reg__container}>
             <div className={styles.title}>Регистрация</div>
@@ -82,7 +75,7 @@ const Registration = ({ changeAuthStatus, changeEnterStatus }) => {
                     />
                 </div>
 
-                <button className={btnStyle} type='submit'>
+                <button className={StyledButton} type='submit'>
                     Зарегистрироваться
                 </button>
             </form>

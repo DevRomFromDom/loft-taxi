@@ -3,6 +3,7 @@ import styles from "./Content.module.scss";
 import Map from "./Map";
 import Profile from "./Profile";
 import { ReactComponent as Logo } from "../images/svg/logo.svg";
+import classNames from "classnames";
 
 const PAGES = {
     map: <Map />,
@@ -34,11 +35,9 @@ const Content = ({ changeEnterStatus }) => {
                 </div>
                 <nav className={styles.nav}>
                     <button
-                        className={
-                            page === "map"
-                                ? `${styles.nav_btn} ${styles.active}`
-                                : styles.nav_btn
-                        }
+                        className={classNames(styles.nav_btn, {
+                            [styles.active]: page === "map",
+                        })}
                         value={"map"}
                         onClick={(e) => {
                             handleChangePage(e);
@@ -47,11 +46,9 @@ const Content = ({ changeEnterStatus }) => {
                         Карта
                     </button>
                     <button
-                        className={
-                            page === "profile"
-                                ? `${styles.nav_btn} ${styles.active}`
-                                : styles.nav_btn
-                        }
+                        className={classNames(styles.nav_btn, {
+                            [styles.active]: page === "profile",
+                        })}
                         value={"profile"}
                         onClick={(e) => {
                             handleChangePage(e);
