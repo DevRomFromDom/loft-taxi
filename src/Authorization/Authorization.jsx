@@ -4,7 +4,7 @@ import Login from "./Login";
 import styles from "./Authorization.module.scss";
 import { ReactComponent as Logo } from "../images/svg/logo.svg";
 
-const Authorization = ({changeEnterStatus}) => {
+const Authorization = () => {
     const [authStatus, setAuthStatus] = useState("login");
     const changeAuthStatus = (status)=>{ 
         setAuthStatus(status)
@@ -26,9 +26,9 @@ const Authorization = ({changeEnterStatus}) => {
                 <div className={styles.auth__body}>
                     <div className={styles.auth__container}>
                         {authStatus === "login" ? (
-                            <Login changeAuthStatus={changeAuthStatus} changeEnterStatus={changeEnterStatus}/>
+                            <Login changeAuthStatus={changeAuthStatus} />
                         ) : authStatus === "registration" ? (
-                            <Registration changeAuthStatus={changeAuthStatus} changeEnterStatus={changeEnterStatus}/>
+                            <Registration changeAuthStatus={changeAuthStatus}/>
                         ) : null}
                     </div>
                 </div>

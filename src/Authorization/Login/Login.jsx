@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import classNames from "classnames";
+import { withAuth } from "../../AuthContext";
 
 const CssTextField = withStyles({
     root: {
@@ -18,18 +19,21 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Login = ({ changeAuthStatus, changeEnterStatus }) => {
+const Login = ({ changeAuthStatus,logIn }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const styledButton = classNames(styles.btn, {
+        [styles.disabled]: email.length === 0 || password.length === 0,
+    });
+
     const changeToRegistration = () => {
         changeAuthStatus("registration");
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        changeEnterStatus("content");
+        logIn(email, password);
     };
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const styledButton = classNames(styles.btn, { [styles.disabled]: email.length === 0 || password.length === 0 });
-    
+
     return (
         <div className={styles.login__container}>
             <div className={styles.title}>Войти</div>
@@ -66,10 +70,7 @@ const Login = ({ changeAuthStatus, changeEnterStatus }) => {
                 </div>
                 <div className={styles.forget_password}>Забыли пароль?</div>
 
-                <button
-                    className={styledButton}
-                    type='submit'
-                >
+                <button className={styledButton} type='submit'>
                     Войти
                 </button>
             </form>
@@ -86,4 +87,4 @@ const Login = ({ changeAuthStatus, changeEnterStatus }) => {
     );
 };
 
-export default Login;
+export default withAuth(Login);
