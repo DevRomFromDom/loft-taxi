@@ -25,7 +25,7 @@ const Content = ({ logOut }) => {
     };
 
     return (
-        <div className={styles.content}>
+        <div className={styles.content} data-testid="content-container">
             <div className={styles.header}>
                 <div className={styles.logo}>
                     <div className={styles.logo_svg}>

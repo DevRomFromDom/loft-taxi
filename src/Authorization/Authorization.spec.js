@@ -1,11 +1,16 @@
-import React from "react"
-import Authorization from "./Authorization"
-import {render} from "@testing-library/react"
+import React from "react";
+import Authorization from "./Authorization";
+import { render, screen, fireEvent } from "@testing-library/react";
 
+describe("Authorization", () => {
+    
+    it("renders correctly", () => {
+       
+        const { container } = render(<Authorization />);
+        expect(screen.getByTestId("reg-link")).toHaveTextContent("Регистрация")
+        fireEvent.click(screen.getByText('Регистрация'))
+        expect(screen.getByTestId("login-link")).toHaveTextContent('Войти?')
 
-describe("Authorization", ()=>{
-    it("renders correctly", ()=>{
-        const {container} = render(<Authorization/>)
-        expect(container.innerHTML).toMatch("taxi")
-    })
-})
+        
+    });
+});

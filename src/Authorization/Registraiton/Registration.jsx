@@ -41,7 +41,7 @@ const Registration = ({ changeAuthStatus }) => {
             name.length === 0 || email.length === 0 || password.length === 0,
     });
     return (
-        <div className={styles.reg__container}>
+        <div className={styles.reg__container} data-testid="registration-component">
             <div className={styles.title}>Регистрация</div>
             <form
                 className={styles.login__form}
@@ -92,7 +92,7 @@ const Registration = ({ changeAuthStatus }) => {
             </form>
             <div className={styles.link}>
                 Уже зарегестрированны?{" "}
-                <div className={styles.link__login} onClick={changeToLogin}>
+                <div className={styles.link__login} onClick={changeToLogin} data-testid="login-link">
                     &nbsp; Войти?
                 </div>
             </div>

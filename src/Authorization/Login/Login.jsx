@@ -5,6 +5,7 @@ import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import classNames from "classnames";
 import { withAuth } from "../../AuthContext";
+import PropTypes from "prop-types";
 
 const CssTextField = withStyles({
     root: {
@@ -19,7 +20,12 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Login = ({ changeAuthStatus,logIn }) => {
+const Login = ({ changeAuthStatus, logIn }) => {
+    Login.propTypes = {
+        changeAuthStatus: PropTypes.func,
+        logIn: PropTypes.func,
+    };
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const styledButton = classNames(styles.btn, {
@@ -35,7 +41,7 @@ const Login = ({ changeAuthStatus,logIn }) => {
     };
 
     return (
-        <div className={styles.login__container}>
+        <div className={styles.login__container} data-testid="login-component">
             <div className={styles.title}>Войти</div>
             <form
                 className={styles.login__form}
@@ -77,8 +83,9 @@ const Login = ({ changeAuthStatus,logIn }) => {
             <div className={styles.link}>
                 Новый пользователь?
                 <div
-                    className={styles.link__login}
+                    className={styles.link__reg}
                     onClick={changeToRegistration}
+                    data-testid="reg-link"
                 >
                     &nbsp; Регистрация
                 </div>

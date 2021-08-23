@@ -1,13 +1,13 @@
 import React from "react"
 import Content from "./Content"
-import {render, fireEvent} from "@testing-library/react"
+import {render, fireEvent, screen} from "@testing-library/react"
 
 
 describe("Content", ()=>{
     it("renders correctly", ()=>{
         const {container} = render(<Content/>) 
-        expect(container.getByText('Карта')).toBe(true)
-        fireEvent.click(container.getByTestId("profile-button"))
-        expect(container.getByText('Профиль')).toBe(true)
+        expect(container).toBeTruthy()
+        fireEvent.click(screen.getByTestId("profile-button"))
+        expect(container.getElementsByClassName('profile__component')).toBeTruthy()
     })
 })

@@ -1,10 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import PropTypes from "prop-types"
 
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    AuthProvider.propTypes = {
+        children: PropTypes.elementType
+    }
 
     const logIn = (email, password) => {
         if (email !== "valid@email.com" && password !== "correctpassword") {

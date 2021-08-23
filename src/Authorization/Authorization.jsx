@@ -28,7 +28,7 @@ const Authorization = () => {
                         {authStatus === "login" ? (
                             <Login changeAuthStatus={changeAuthStatus} />
                         ) : authStatus === "registration" ? (
-                            <Registration changeAuthStatus={changeAuthStatus}/>
+                            <Registration changeAuthStatus={changeAuthStatus} />
                         ) : null}
                     </div>
                 </div>
