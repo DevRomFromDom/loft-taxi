@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./App.module.scss";
 import Authorization from "./Authorization";
 import Content from "./Content/Content";
+import { withAuth } from "./AuthContext";
+import PropTypes from "prop-types";
 
-function App() {
-    const [enterStatus, setEnterStatus] = useState("auth");
-    const changeEnterStatus=(e)=>{
-        setEnterStatus(e)
-    }
+const App = ({ isLoggedIn }) => {
+    App.propTypes = {
+        isLoggedIn: PropTypes.bool,
+    };
+
     return (
         <div className={styles.wrapper}>
-            {enterStatus === "auth" ? <Authorization changeEnterStatus={changeEnterStatus}/> : <Content changeEnterStatus={changeEnterStatus} />}
+            {isLoggedIn ? <Content /> : <Authorization />}
         </div>
     );
-}
+};
 
-export default App;
+export default withAuth(App);

@@ -3,6 +3,9 @@ import classNames from "classnames";
 import styles from "./Registration.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
+import { AuthContext } from "../../AuthContext";
+import { useContext } from "react";
+import PropTypes from "prop-types";
 
 const CssTextField = withStyles({
     root: {
@@ -17,20 +20,28 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Registration = ({ changeAuthStatus, changeEnterStatus }) => {
+const Registration = ({ changeAuthStatus }) => {
+    Registration.propTypes = {
+        changeAuthStatus: PropTypes.string,
+        logIn: PropTypes.func
+    };
+    const authContext = useContext(AuthContext);
     const changeToLogin = () => {
         changeAuthStatus("login");
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        changeEnterStatus("content");
+        authContext.logIn(email, password);
     };
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const StyledButton = classNames(styles.btn, {[styles.disabled]: name.length === 0 || email.length === 0 || password.length === 0})
+    const StyledButton = classNames(styles.btn, {
+        [styles.disabled]:
+            name.length === 0 || email.length === 0 || password.length === 0,
+    });
     return (
-        <div className={styles.reg__container}>
+        <div className={styles.reg__container} data-testid="registration-component">
             <div className={styles.title}>Регистрация</div>
             <form
                 className={styles.login__form}
@@ -58,7 +69,7 @@ const Registration = ({ changeAuthStatus, changeEnterStatus }) => {
                         id='name'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        data-testid="name-label"
+                        data-testid='name-label'
                     />
                 </div>
                 <div className={styles.password}>
@@ -81,7 +92,7 @@ const Registration = ({ changeAuthStatus, changeEnterStatus }) => {
             </form>
             <div className={styles.link}>
                 Уже зарегестрированны?{" "}
-                <div className={styles.link__login} onClick={changeToLogin}>
+                <div className={styles.link__login} onClick={changeToLogin} data-testid="login-link">
                     &nbsp; Войти?
                 </div>
             </div>

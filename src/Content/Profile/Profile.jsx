@@ -3,7 +3,9 @@ import styles from "./Profile.module.scss";
 
 const Profile = () => {
     return (
-        <div className={styles.profile__component}>
+        <div
+            className={styles.profile__component}
+        >
             <h1>Профиль</h1>
         </div>
     );

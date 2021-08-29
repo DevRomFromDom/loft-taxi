@@ -1,10 +1,13 @@
 import React from "react";
 import App from "./App";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 
 describe("App", () => {
     it("renders correctly", () => {
-        const { container } = render(<App />);
+        const { rerender } = render(<App isLoggedIn={false}/>);
+        expect(screen.getByTestId("login-component")).toHaveTextContent("Войти");
+        rerender(<App isLoggedIn={true}/>)
+        expect(screen.getByTestId("content-container")).toHaveTextContent("Карта");
     });
 });
