@@ -1,0 +1,39 @@
+.modal__wrapper{
+    position: absolute;
+    bottom: 0;
+    min-height: 70px;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    z-index: 100;
+    width: auto;
+}
+
+.modal__container {
+    position: relative;
+    bottom: -100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+    
+    &.active {
+        transform: translate(0%, -100%);
+    }
+    &.close {
+        transform: translate(0%, 0%);
+    }
+    &.error {
+        background-color: rgb(255, 55, 55);
+    }
+    &.success {
+        background-color: rgb(34, 185, 34);
+    }
+    transition-duration: 1000ms;
+}
+.modal__text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 28px;
+}

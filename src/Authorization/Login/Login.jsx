@@ -4,8 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import { useState } from "react";
 import classNames from "classnames";
-import { withAuth } from "../../AuthContext";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { authenticate } from "../../store";
+import { Link, useHistory } from "react-router-dom";
 
 const CssTextField = withStyles({
     root: {
@@ -20,33 +22,33 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Login = ({ changeAuthStatus, logIn }) => {
-    Login.propTypes = {
-        changeAuthStatus: PropTypes.func,
-        logIn: PropTypes.func,
-    };
-
+const Login = ({ authenticate }) => {
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
     const styledButton = classNames(styles.btn, {
         [styles.disabled]: email.length === 0 || password.length === 0,
     });
 
-    const changeToRegistration = () => {
-        changeAuthStatus("registration");
-    };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        logIn(email, password);
+        const { success = false } = (await authenticate(email, password)) ?? {};
+        if (success) {
+            console.log(success);
+            history.push("/content/map");
+        } else {
+            setError(true);
+        }
     };
 
     return (
-        <div className={styles.login__container} data-testid="login-component">
+        <div className={styles.login__container} data-testid='login-component'>
             <div className={styles.title}>Войти</div>
             <form
                 className={styles.login__form}
                 noValidate
-                autoComplete='on'
+                autoComplete='off'
                 onSubmit={(e) => handleSubmit(e)}
             >
                 <div className={styles.email}>
@@ -56,9 +58,12 @@ const Login = ({ changeAuthStatus, logIn }) => {
                         label='Email'
                         required
                         fullWidth
-                        error={false}
+                        error={error}
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setError(false);
+                        }}
                     />
                 </div>
                 <div className={styles.password}>
@@ -69,29 +74,40 @@ const Login = ({ changeAuthStatus, logIn }) => {
                         required
                         type='password'
                         fullWidth
-                        error={false}
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setError(false);
+                        }}
+                        error={error}
                     />
                 </div>
                 <div className={styles.forget_password}>Забыли пароль?</div>
 
-                <button className={styledButton} type='submit'>
+                <button
+                    className={styledButton}
+                    type='submit'
+                    data-testid='login-btn'
+                >
                     Войти
                 </button>
             </form>
             <div className={styles.link}>
                 Новый пользователь?
-                <div
+                <Link
+                    to='/auth/registration'
                     className={styles.link__reg}
-                    onClick={changeToRegistration}
-                    data-testid="reg-link"
+                    data-testid='reg-link'
                 >
-                    &nbsp; Регистрация
-                </div>
+                    &nbsp;Регистрация{" "}
+                </Link>
             </div>
         </div>
     );
 };
 
-export default withAuth(Login);
+Login.propTypes = {
+    authenticate: PropTypes.func,
+};
+
+export default connect(null, { authenticate })(Login);

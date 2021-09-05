@@ -3,9 +3,10 @@ import classNames from "classnames";
 import styles from "./Registration.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
-import { AuthContext } from "../../AuthContext";
-import { useContext } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registraiton } from "../../store";
+import { Link, useHistory } from "react-router-dom";
 
 const CssTextField = withStyles({
     root: {
@@ -20,19 +21,8 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Registration = ({ changeAuthStatus }) => {
-    Registration.propTypes = {
-        changeAuthStatus: PropTypes.string,
-        logIn: PropTypes.func
-    };
-    const authContext = useContext(AuthContext);
-    const changeToLogin = () => {
-        changeAuthStatus("login");
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        authContext.logIn(email, password);
-    };
+const Registration = ({ registraiton }) => {
+    const [error, setError] = useState(false);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -40,8 +30,25 @@ const Registration = ({ changeAuthStatus }) => {
         [styles.disabled]:
             name.length === 0 || email.length === 0 || password.length === 0,
     });
+
+    const history = useHistory();
+
+    const handleSubmit = async (e) => {
+        const [regName, regSurname] = name.trim().split(" ");
+        e.preventDefault();
+        const {success = false} = (await registraiton(email, password, regName, regSurname))??{};
+        console.log(success);
+        if (success) {
+            history.push("/auth/login");
+        } else {
+            setError(true);
+        }
+    };
     return (
-        <div className={styles.reg__container} data-testid="registration-component">
+        <div
+            className={styles.reg__container}
+            data-testid='registration-component'
+        >
             <div className={styles.title}>Регистрация</div>
             <form
                 className={styles.login__form}
@@ -54,11 +61,16 @@ const Registration = ({ changeAuthStatus }) => {
                         label='Email'
                         required
                         fullWidth
-                        error={false}
+                        error={error}
                         id='email'
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setError(false);
+                        }}
                         data-testid='email-label'
+                        type='email'
+                        name='registration'
                     />
                 </div>
                 <div className={styles.name}>
@@ -68,8 +80,14 @@ const Registration = ({ changeAuthStatus }) => {
                         fullWidth
                         id='name'
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            setError(false);
+                        }}
                         data-testid='name-label'
+                        placeholder='Имя Фамилия'
+                        type='text'
+                        error={error}
                     />
                 </div>
                 <div className={styles.password}>
@@ -80,9 +98,12 @@ const Registration = ({ changeAuthStatus }) => {
                         required
                         type='password'
                         fullWidth
-                        error={false}
+                        error={error}
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setError(false);
+                        }}
                     />
                 </div>
 
@@ -92,12 +113,20 @@ const Registration = ({ changeAuthStatus }) => {
             </form>
             <div className={styles.link}>
                 Уже зарегестрированны?{" "}
-                <div className={styles.link__login} onClick={changeToLogin} data-testid="login-link">
-                    &nbsp; Войти?
-                </div>
+                <Link
+                    to='/auth/login'
+                    className={styles.link__login}
+                    data-testid='login-link'
+                >
+                    &nbsp;Войти?{" "}
+                </Link>
             </div>
         </div>
     );
 };
 
-export default Registration;
+Registration.propTypes = {
+    registraiton: PropTypes.func,
+};
+
+export default connect(null, { registraiton })(Registration);

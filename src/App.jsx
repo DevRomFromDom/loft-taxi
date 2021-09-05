@@ -1,20 +1,25 @@
 import React from "react";
 import styles from "./App.module.scss";
 import Authorization from "./Authorization";
-import Content from "./Content/Content";
-import { withAuth } from "./AuthContext";
-import PropTypes from "prop-types";
+import Content from "./Content";
+import { Route, Switch } from "react-router-dom";
+import { PrivateRoute } from "./PrivateRoute";
+import ModalInfo from "./ModalInfo";
 
-const App = ({ isLoggedIn }) => {
-    App.propTypes = {
-        isLoggedIn: PropTypes.bool,
-    };
 
+const App = () => {
     return (
-        <div className={styles.wrapper}>
-            {isLoggedIn ? <Content /> : <Authorization />}
-        </div>
+        <>
+            <div className={styles.wrapper}>
+                <Switch>
+                    <PrivateRoute path='/' exact />
+                    <PrivateRoute path='/content' component={Content} />
+                    <Route path='/auth' component={Authorization} />
+                </Switch>
+            </div>
+            <ModalInfo />
+        </>
     );
 };
 
-export default withAuth(App);
+export default App;

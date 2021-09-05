@@ -19,7 +19,9 @@ const Map = React.memo(() => {
     }, []);
     return (
         <div className={styles.map__container}>
-            <div className={styles.map} ref={mapContainer}></div>
+            <div className={styles.map} ref={mapContainer}>
+                <div className={styles.map__content}>Карта</div>
+            </div>
         </div>
     );
 });
