@@ -19,10 +19,7 @@ export const regMiddleware = (store) => (next) => async (action) => {
                     store.dispatch(closeModalInfo());
                 }, 5000);
             }
-            console.log(data, 2222)
             return data;
-            
-           
         } else {
             const state = store.getState();
             if (!state.modal.show) {
@@ -37,8 +34,7 @@ export const regMiddleware = (store) => (next) => async (action) => {
                 }, 5000);
             }
         }
-        
     } else {
-        next(action);
+        return next(action);
     }
 };

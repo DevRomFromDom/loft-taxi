@@ -40,8 +40,14 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Profile = ({ token }) => {
+const Profile = ({ token, card }) => {
     const dispatch = useDispatch();
+    useEffect(() => {
+        if (!card.id) {
+            dispatch(getCardEmit(token));
+        }
+    }, [dispatch, token,card]);
+
     const [name, setName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [date, setDate] = useState("");
@@ -49,9 +55,15 @@ const Profile = ({ token }) => {
     const [edit, setEdit] = useState(true);
 
     const history = useHistory();
+
     useEffect(() => {
-        dispatch(getCardEmit(token));
-    }, [dispatch, token]);
+        if (card.id) {
+            setCardNumber(card.cardNumber);
+            setCvc(card.cvc);
+            setDate(card.expiryDate);
+            setName(card.cardName);
+        }
+    }, [card]);
 
     const styledButton = classNames(styles.save_btn, {
         [styles.disabled]:
@@ -256,7 +268,10 @@ const Profile = ({ token }) => {
     }
 };
 
-export default connect((state) => ({ token: state.auth.token }), {
-    newCard,
-    getCardEmit,
-})(Profile);
+export default connect(
+    (state) => ({ token: state.auth.token, card: state.card }),
+    {
+        newCard,
+        getCardEmit,
+    }
+)(Profile);

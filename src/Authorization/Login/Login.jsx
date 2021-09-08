@@ -35,7 +35,6 @@ const Login = ({ authenticate }) => {
         e.preventDefault();
         const { success = false } = (await authenticate(email, password)) ?? {};
         if (success) {
-            console.log(success);
             history.push("/content/map");
         } else {
             setError(true);

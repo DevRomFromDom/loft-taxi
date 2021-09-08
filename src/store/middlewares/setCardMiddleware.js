@@ -42,6 +42,6 @@ export const setCardMiddleware = (store) => (next) => async (action) => {
             }
         }
     } else {
-        next(action);
+       return next(action);
     }
 };

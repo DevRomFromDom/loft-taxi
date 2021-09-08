@@ -25,6 +25,6 @@ export const getCardMiddleware = (store) => (next) => async (action) => {
         }
         return data;
     } else {
-        next(action);
+       return next(action);
     }
 };

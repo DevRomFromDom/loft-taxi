@@ -36,8 +36,9 @@ const Registration = ({ registraiton }) => {
     const handleSubmit = async (e) => {
         const [regName, regSurname] = name.trim().split(" ");
         e.preventDefault();
-        const {success = false} = (await registraiton(email, password, regName, regSurname))??{};
-        console.log(success);
+        const result = await registraiton(email, password, regName, regSurname)
+        console.log(result, registraiton.toString())
+        const {success = false} = result ??{};
         if (success) {
             history.push("/auth/login");
         } else {

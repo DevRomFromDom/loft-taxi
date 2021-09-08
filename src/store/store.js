@@ -7,8 +7,9 @@ import {
     getCardMiddleware,
 } from "./middlewares";
 const middleWare = [
-    authMiddleware,
     regMiddleware,
+    authMiddleware,
+    
     setCardMiddleware,
     getCardMiddleware,
 ];

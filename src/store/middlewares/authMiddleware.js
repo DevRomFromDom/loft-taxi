@@ -7,7 +7,7 @@ export const authMiddleware = (store) => (next) => async (action) => {
         const { email, password } = action.payload;
         const data = await serverLogin(email, password);
         if (data.success) {
-            const token =  await localStorage.getItem("token")
+            const token =  localStorage.getItem("token")
             if (!(token) || data.token !== token) {
                 localStorage.setItem("token", data.token);
             }
@@ -28,6 +28,6 @@ export const authMiddleware = (store) => (next) => async (action) => {
             }
         }
     } else {
-        next(action);
+        return next(action);
     }
 };

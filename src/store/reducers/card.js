@@ -11,10 +11,10 @@ export default function (state = initialState, action) {
             return state;
         }
         case SET_CARD: {
-            console.log(action.payload)
             return action.payload;
         }
         default:
             return state;
     }
 }
+
