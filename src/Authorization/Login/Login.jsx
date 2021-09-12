@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Login.module.scss";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -22,7 +22,7 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Login = ({ authenticate }) => {
+const Login = ({ authenticate, isLoggedIn, errorMessage }) => {
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -31,15 +31,22 @@ const Login = ({ authenticate }) => {
         [styles.disabled]: email.length === 0 || password.length === 0,
     });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { success = false } = (await authenticate(email, password)) ?? {};
-        if (success) {
-            history.push("/content/map");
-        } else {
+    useEffect(() => {
+        if (errorMessage === "error") {
             setError(true);
         }
+    }, [errorMessage]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await authenticate(email, password);
     };
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push("/content/map");
+        }
+    }, [isLoggedIn, history]);
 
     return (
         <div className={styles.login__container} data-testid='login-component'>
@@ -107,6 +114,16 @@ const Login = ({ authenticate }) => {
 
 Login.propTypes = {
     authenticate: PropTypes.func,
+    errorMessage: PropTypes.string,
+    isLoggedIn: PropTypes.bool
 };
 
-export default connect(null, { authenticate })(Login);
+export default connect(
+    (state) => ({
+        isLoggedIn: state.auth.isLoggedIn,
+        errorMessage: state.modal.modalInfo.type,
+    }),
+    {
+        authenticate,
+    }
+)(Login);

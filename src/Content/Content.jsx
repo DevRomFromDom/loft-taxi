@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Content.module.scss";
 import Map from "./Map";
 import Profile from "./Profile";
@@ -6,12 +6,16 @@ import { ReactComponent as Logo } from "../images/svg/logo.svg";
 import classNames from "classnames";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logOut } from "../store";
-import { Link, Switch, Route } from "react-router-dom";
+import { logOut, getCardEmit } from "../store";
+import { Link, Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-
-const Content = ({ logOut, match }) => {
-   
+const Content = ({ logOut, match, token }) => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getCardEmit(token));
+    }, [token, dispatch]);
 
     return (
         <div className={styles.content} data-testid='content-container'>
@@ -27,10 +31,11 @@ const Content = ({ logOut, match }) => {
                 </div>
                 <nav className={styles.nav}>
                     <Link
-                        to={`${match.url+'/map'}`}
+                        to={`${match.url + "/map"}`}
                         data-testid='navigator-button'
                         className={classNames(styles.nav_btn, {
-                            [styles.active]: match === "map",
+                            [styles.active]:
+                                history.location.pathname === "/content/map",
                         })}
                     >
                         Карта
@@ -38,9 +43,11 @@ const Content = ({ logOut, match }) => {
                     <Link
                         data-testid='profile-button'
                         className={classNames(styles.nav_btn, {
-                            [styles.active]: match === "profile",
+                            [styles.active]:
+                                history.location.pathname ===
+                                "/content/profile",
                         })}
-                        to={`${match.url+'/profile'}`}
+                        to={`${match.url + "/profile"}`}
                     >
                         Профиль
                     </Link>
@@ -51,8 +58,11 @@ const Content = ({ logOut, match }) => {
             </div>
             <div className={styles.main_content__container}>
                 <Switch>
-                    <Route  path={`${match.url+"/map"}`} component={Map} />
-                    <Route  path={`${match.url+"/profile"}`} component={Profile} />
+                    <Route path={`${match.url + "/map"}`} component={Map} />
+                    <Route
+                        path={`${match.url + "/profile"}`}
+                        component={Profile}
+                    />
                 </Switch>
             </div>
         </div>
@@ -61,9 +71,11 @@ const Content = ({ logOut, match }) => {
 
 Content.propTypes = {
     logOut: PropTypes.func,
-    match: PropTypes.object
+    match: PropTypes.object,
+    token: PropTypes.string,
 };
 
-export default connect(null, {
+export default connect((state) => ({ token: state.auth.token }), {
     logOut,
+    getCardEmit,
 })(Content);

@@ -20,6 +20,7 @@ const ModalInfo = ({ modalInfo, show }) => {
         [styles.close]: close,
         [styles.error]: type === "error",
         [styles.success]: type === "success",
+        [styles.info]: type === "info",
     });
 
     return (

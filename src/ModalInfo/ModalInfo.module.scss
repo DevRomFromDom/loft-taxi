@@ -5,7 +5,7 @@
     left: 50%;
     transform: translate(-50%, 100%);
     z-index: 100;
-    width: auto;
+    width: 70%;
 }
 
 .modal__container {
@@ -27,6 +27,9 @@
     }
     &.success {
         background-color: rgb(34, 185, 34);
+    }
+    &.info {
+        background-color: rgb(211, 233, 10);
     }
     transition-duration: 1000ms;
 }

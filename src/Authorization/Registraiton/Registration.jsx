@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import styles from "./Registration.module.scss";
 import { withStyles } from "@material-ui/core/styles";
@@ -21,29 +21,33 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-const Registration = ({ registraiton }) => {
-    const [error, setError] = useState(false);
+const Registration = ({ registraiton, regStatus }) => {
+    const [regError, setRegError] = useState(false);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const StyledButton = classNames(styles.btn, {
         [styles.disabled]:
-            name.length === 0 || email.length === 0 || password.length === 0,
+            name.length === 0 || email.length === 0 || password.length === 0 || regError === true
     });
 
     const history = useHistory();
 
+
+   useEffect(()=>{
+       if(regStatus === "error"){
+           setRegError(true)
+       }
+       if(regStatus ==="success"){
+        history.push("/auth/login")
+       }
+   },[regStatus, history])
+
     const handleSubmit = async (e) => {
         const [regName, regSurname] = name.trim().split(" ");
         e.preventDefault();
-        const result = await registraiton(email, password, regName, regSurname)
-        console.log(result, registraiton.toString())
-        const {success = false} = result ??{};
-        if (success) {
-            history.push("/auth/login");
-        } else {
-            setError(true);
-        }
+        await registraiton(email, password, regName, regSurname)
+
     };
     return (
         <div
@@ -62,12 +66,12 @@ const Registration = ({ registraiton }) => {
                         label='Email'
                         required
                         fullWidth
-                        error={error}
+                        error={regError}
                         id='email'
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value);
-                            setError(false);
+                            setRegError(false);
                         }}
                         data-testid='email-label'
                         type='email'
@@ -83,12 +87,12 @@ const Registration = ({ registraiton }) => {
                         value={name}
                         onChange={(e) => {
                             setName(e.target.value);
-                            setError(false);
+                            setRegError(false);
                         }}
                         data-testid='name-label'
                         placeholder='Имя Фамилия'
                         type='text'
-                        error={error}
+                        error={regError}
                     />
                 </div>
                 <div className={styles.password}>
@@ -99,11 +103,11 @@ const Registration = ({ registraiton }) => {
                         required
                         type='password'
                         fullWidth
-                        error={error}
+                        error={regError}
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
-                            setError(false);
+                            setRegError(false);
                         }}
                     />
                 </div>
@@ -128,6 +132,7 @@ const Registration = ({ registraiton }) => {
 
 Registration.propTypes = {
     registraiton: PropTypes.func,
+    regStatus: PropTypes.string
 };
 
-export default connect(null, { registraiton })(Registration);
+export default connect((state)=>({regStatus: state.modal.modalInfo.type}), { registraiton })(Registration);

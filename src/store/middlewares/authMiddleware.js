@@ -7,25 +7,22 @@ export const authMiddleware = (store) => (next) => async (action) => {
         const { email, password } = action.payload;
         const data = await serverLogin(email, password);
         if (data.success) {
-            const token =  localStorage.getItem("token")
-            if (!(token) || data.token !== token) {
+            const token = localStorage.getItem("token");
+            if (!token || data.token !== token) {
                 localStorage.setItem("token", data.token);
             }
             store.dispatch(logIn(data.token));
             return data;
-        } else{
-            const state = store.getState();
-            if (!state.modal.show) {
-                store.dispatch(
-                    showModalInfo({
-                        text: `Указан неверный Email или пароль! ${data.error}`,
-                        type: "error",
-                    })
-                );
-                setTimeout(() => {
-                    store.dispatch(closeModalInfo());
-                }, 5000);
-            }
+        } else {
+            store.dispatch(
+                showModalInfo({
+                    text: `Указан неверный Email или пароль! ${data.error}`,
+                    type: "error",
+                })
+            );
+            setTimeout(() => {
+                store.dispatch(closeModalInfo());
+            }, 5000);
         }
     } else {
         return next(action);

@@ -11,6 +11,7 @@ jest.mock("../../api.js", () => ({
 describe("authMiddleware", () => {
     describe("AUTHENTICATE", () => {
         it("authenticate through api", async () => {
+            serverLogin.mockReturnValueOnce({ success: true, token: '123' });
             const dispatch = jest.fn();
             await authMiddleware({ dispatch })()(
                 authenticate("test@test.com", "123123")

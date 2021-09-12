@@ -9,9 +9,10 @@ import { ReactComponent as Ellipse } from "../../images/svg/Ellipse.svg";
 import { MaskedCardNumber, MaskedDateNumber, MaskedCvcNumber } from "./masks";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { newCard, getCardEmit } from "../../store";
+import { setCard, getCardEmit } from "../../store";
 import { connect, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import PropTypes from "prop-types"
 
 const CssTextField = withStyles({
     root: {
@@ -41,30 +42,26 @@ const CssTextField = withStyles({
 })(TextField);
 
 const Profile = ({ token, card }) => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        if (!card.id) {
-            dispatch(getCardEmit(token));
-        }
-    }, [dispatch, token,card]);
-
     const [name, setName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [date, setDate] = useState("");
     const [cvc, setCvc] = useState("");
     const [edit, setEdit] = useState(true);
-
-    const history = useHistory();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (card.id) {
+        if (card.id || card.token) {
             setCardNumber(card.cardNumber);
             setCvc(card.cvc);
             setDate(card.expiryDate);
             setName(card.cardName);
         }
+        return
     }, [card]);
 
+    const history = useHistory();
+
+    
     const styledButton = classNames(styles.save_btn, {
         [styles.disabled]:
             name.length === 0 ||
@@ -76,7 +73,7 @@ const Profile = ({ token, card }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(
-            newCard({
+            setCard({
                 cardNumber: cardNumber,
                 expiryDate: date,
                 cardName: name,
@@ -266,12 +263,18 @@ const Profile = ({ token, card }) => {
             </div>
         );
     }
-};
+}
+
+Profile.propTypes = {
+    token: PropTypes.string,
+    card: PropTypes.object
+}
+
 
 export default connect(
     (state) => ({ token: state.auth.token, card: state.card }),
     {
-        newCard,
+        setCard,
         getCardEmit,
     }
 )(Profile);

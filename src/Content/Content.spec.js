@@ -3,13 +3,13 @@ import Content from "./Content";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { createMemoryHistory } from "history";
-import {Router} from "react-router-dom"
+import { Router} from "react-router-dom"
 
 describe("Content", () => {
     it("renders correctly", async() => {
         let history = createMemoryHistory({ initialEntries: ["/content/map"] });
         let store = {
-            getState: ()=>({auth:{token:''}}),
+            getState: ()=>({auth:{token:''}, card: {id :""}, addresses: {route:[]}}),
             subscribe: ()=>{},
             dispatch: ()=>{}
         };

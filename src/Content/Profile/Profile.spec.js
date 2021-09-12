@@ -11,7 +11,7 @@ describe("Profile", () => {
             initialEntries: ["/content/profile"],
         });
         let store = {
-            getState: () => ({auth:{token:''}}),
+            getState: () => ({auth:{token:''}, card: {id:""}}),
             subscribe: () => {},
             dispatch: () => {},
         };

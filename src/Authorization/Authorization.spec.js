@@ -7,9 +7,12 @@ import { Provider } from "react-redux";
 
 let history = createMemoryHistory({ initialEntries: ["/auth/login"] });
 describe("Authorization", () => {
-    it("renders correctly", async() => {
+    it("renders correctly", async () => {
         let store = {
-            getState: () => {},
+            getState: () => ({
+                auth: { isLoggedIn: false },
+                modal: { modalInfo: { errorMessage: "error" } } 
+            }),
             subscribe: () => {},
             dispatch: () => {},
         };
@@ -22,7 +25,7 @@ describe("Authorization", () => {
         );
         expect(container.getElementsByClassName(".title")).toBeDefined();
         expect(history.location.pathname).toBe("/auth/login");
-        await fireEvent.click(screen.getByText("Регистрация"))
+        await fireEvent.click(screen.getByText("Регистрация"));
         expect(history.location.pathname).toBe("/auth/registration");
     });
 });
