@@ -25,9 +25,11 @@ const ModalInfo = ({ modalInfo, show }) => {
 
     return (
         <div className={styles.modal__wrapper}>
-            <div className={styledModal} data-testid="modalInfo-container">
+            <div className={styledModal} data-testid='modalInfo-container'>
                 <div className={styles.modal__text}>{text}</div>
             </div>
+
+           
         </div>
     );
 };

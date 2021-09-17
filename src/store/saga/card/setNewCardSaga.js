@@ -1,5 +1,10 @@
 import { takeEvery, call, put, delay } from "redux-saga/effects";
-import { SET_CARD, showModalInfo, closeModalInfo, newCard } from "../../actions";
+import {
+    SET_CARD,
+    showModalInfo,
+    closeModalInfo,
+    newCard,
+} from "../../actions";
 import { serverSetCard } from "../../../api";
 export function* setCardSaga(action) {
     const { cardNumber, expiryDate, cardName, cvc, token } = action.payload;
@@ -12,7 +17,7 @@ export function* setCardSaga(action) {
         token
     );
     if (data.success) {
-        yield put(newCard(action.payload));
+        yield put(newCard({ cardNumber, expiryDate, cardName, cvc }));
         yield put(
             showModalInfo({
                 text: "Данные карты успешно добавлены!",

@@ -31,7 +31,6 @@ describe("setCardSaga", () => {
                         expiryDate: "12/12",
                         cardName: "name",
                         cvc: "123",
-                        token: "2325135fgdfg",
                     },
                 },
                 {
@@ -63,7 +62,6 @@ describe("setCardSaga", () => {
                         expiryDate: "12/12",
                         cardName: "name",
                         cvc: "123",
-                        token: "2325135fgdfg",
                     },
                 },
                 {

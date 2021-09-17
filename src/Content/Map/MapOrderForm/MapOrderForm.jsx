@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./MapOrderForm.module.scss";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 import {
     FormControl,
     MenuItem,
@@ -47,6 +48,7 @@ const prices = [
 ];
 
 const MapOrderForm = ({ getAddresses, stateAddresses, getRoute }) => {
+    const { register, handleSubmit } = useForm();
     const [addresses, setAddresses] = useState([]);
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
@@ -70,16 +72,15 @@ const MapOrderForm = ({ getAddresses, stateAddresses, getRoute }) => {
         setCar(carTitle);
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        await getRoute(start, end);
+    const orderSubmit = async (data) => {
+        await getRoute(data.start, data.end);
     };
 
     return (
         <div className={styles.form__wrapper}>
             <form
                 className={styles.form__container}
-                onSubmit={(event) => handleSubmit(event)}
+                onSubmit={handleSubmit(orderSubmit)}
             >
                 <div className={styles.select__form}>
                     <FormControl className={classes.formControl}>
@@ -90,6 +91,10 @@ const MapOrderForm = ({ getAddresses, stateAddresses, getRoute }) => {
                             onChange={(e) => setStart(e.target.value)}
                             className={classes.select}
                             value={start}
+                            inputProps={{
+                                ...register("start"),
+                                "data-testid": "start-id",
+                            }}
                         >
                             {addresses
                                 ? addresses
@@ -109,6 +114,11 @@ const MapOrderForm = ({ getAddresses, stateAddresses, getRoute }) => {
                             onChange={(e) => setEnd(e.target.value)}
                             className={classes.select}
                             value={end}
+                            inputProps={{
+                                ...register("end"),
+
+                                "data-testid": "end-id",
+                            }}
                         >
                             {addresses
                                 ? addresses
@@ -137,7 +147,11 @@ const MapOrderForm = ({ getAddresses, stateAddresses, getRoute }) => {
                             : null}
                     </div>
                     <div className={styles.submit__btn}>
-                        <button className={styledButton} type='submit' data-testid="btn-test">
+                        <button
+                            className={styledButton}
+                            type='submit'
+                            data-testid='btn-test'
+                        >
                             Заказать
                         </button>
                     </div>

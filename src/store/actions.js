@@ -13,7 +13,6 @@ export const GET_ADDRESSES_STATE = "GET_ADDRESSES_STATE";
 export const GET_ROUTE = "GET_ROUTE";
 export const SAVE_ROUTE = "SAVE_ROUTE";
 
-
 export const logIn = (token) => ({ type: LOG_IN, payload: token });
 export const logOut = () => ({ type: LOG_OUT });
 export const registraiton = (email, password, name, surname) => ({
@@ -38,20 +37,13 @@ export const setCard = ({ cardNumber, expiryDate, cardName, cvc, token }) => ({
     type: SET_CARD,
     payload: { cardNumber, expiryDate, cardName, cvc, token },
 });
-export const newCard = ({
-    cardNumber,
-    expiryDate: date,
-    cardName: name,
-    cvc,
-    token,
-}) => ({
+export const newCard = ({ cardNumber, expiryDate, cardName, cvc }) => ({
     type: NEW_CARD,
     payload: {
         cardNumber: cardNumber,
-        expiryDate: date,
-        cardName: name,
-        cvc: cvc,
-        token: token,
+        expiryDate: expiryDate,
+        cardName: cardName,
+        cvc: cvc
     },
 });
 
@@ -64,4 +56,7 @@ export const getRoute = (address1, address2) => ({
     type: GET_ROUTE,
     payload: { address1, address2 },
 });
-export const saveRoute = (addresses) =>({type: SAVE_ROUTE, payload: addresses})
+export const saveRoute = (addresses) => ({
+    type: SAVE_ROUTE,
+    payload: addresses,
+});

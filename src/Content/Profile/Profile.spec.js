@@ -24,11 +24,5 @@ describe("Profile", () => {
         );
         expect(history.location.pathname).toBe("/content/profile");
         expect(screen.getByText("Ввдеите платежные данные")).toBeDefined();
-        await fireEvent.click(screen.getByText("Coхранить"));
-        expect(
-            screen.getByText(
-                "Платёжные данные обновлены. Теперь вы можете заказывать такси."
-            )
-        ).toBeDefined();
     });
 });

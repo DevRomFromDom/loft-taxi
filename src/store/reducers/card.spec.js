@@ -48,7 +48,7 @@ describe("Card reducer", () => {
             ).toEqual(fakeCard);
         });
     });
-    it("SET_CARD action", () => {
+    it("NEW_CARD action", () => {
         expect(
             card(fakeCard, {
                 type: SET_CARD,
@@ -57,6 +57,7 @@ describe("Card reducer", () => {
                     expiryDate: "12121",
                     cardName: "qw",
                     cvc: "223",
+                    token: "rec4NwqbXyWY2Ju7E"
                 },
             })
         ).toEqual({
@@ -64,6 +65,7 @@ describe("Card reducer", () => {
             expiryDate: "12121",
             cardName: "qw",
             cvc: "223",
+            id: "rec4NwqbXyWY2Ju7E"
         });
     });
 });

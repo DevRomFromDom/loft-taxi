@@ -1,0 +1,76 @@
+
+.login__form_wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.login__form {
+    display: flex;
+    flex-direction: column;
+}
+.login__container {
+    width: 100%;
+    padding: 0 110px;
+}
+.link {
+    display: flex;
+}
+.title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+
+    color: #000000;
+    margin-bottom: 41px;
+}
+.email {
+    margin-bottom: 25px;
+}
+.password {
+    margin-bottom: 13px;
+}
+.btn {
+    width: 100%;
+    cursor: pointer;
+    background: #fdbf5a;
+    border-radius: 70px;
+    border: none;
+    padding: 16px 0;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 29px;
+
+    color: #000000;
+    margin-bottom: 33px;
+    &.disabled{
+        background: #D8D7D5;
+        cursor: none;
+        pointer-events: none;
+    }
+    &:focus{    
+
+        background: #FFA842;
+    }
+}
+.forget_password {
+    width: 100%;
+    text-align: end;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    /* Gray 3 */
+
+    color: #828282;
+    cursor: pointer;
+    margin-bottom: 46px;
+}

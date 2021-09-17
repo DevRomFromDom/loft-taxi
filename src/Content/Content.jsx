@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Content.module.scss";
 import Map from "./Map";
 import Profile from "./Profile";

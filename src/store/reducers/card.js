@@ -1,4 +1,4 @@
-import { GET_CARD, SET_CARD } from "../actions";
+import { GET_CARD, NEW_CARD } from "../actions";
 
 const initialState = {};
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -10,11 +10,11 @@ export default function (state = initialState, action) {
             }
             return state;
         }
-        case SET_CARD: {
-            return action.payload;
+        case NEW_CARD: {
+            const { cardName, cardNumber, cvc, expiryDate } = action.payload;
+            return { ...state, cardName, cardNumber, cvc, expiryDate };
         }
         default:
             return state;
     }
 }
-
