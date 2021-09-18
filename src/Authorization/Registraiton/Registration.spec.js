@@ -1,16 +1,27 @@
 import React from "react";
 import Registration from "./Registration";
 import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import {  Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 const logIn = jest.fn();
-const AppContext = React.createContext()
 
 describe("Registration", () => {
-   
     it("renders correctly", async () => {
+        const history = createMemoryHistory();
+        let store = {
+            getState: jest.fn(() => ({
+                modal: { modalInfo: { regStatus: "error" } },
+            })),
+            subscribe: jest.fn(),
+            dispatch: jest.fn(),
+        };
         const { container, findByTestId } = render(
-            <AppContext.Provider  value={logIn}>
-                <Registration />
-            </AppContext.Provider>
+            <Provider store={store}>
+                <Router history={history}>
+                    <Registration />
+                </Router>
+            </Provider>
         );
         expect(container.innerHTML).toMatch("Регистрация");
         expect(await findByTestId("email-label")).toBeDefined();

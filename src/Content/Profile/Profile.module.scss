@@ -1,7 +1,185 @@
-.profile__component{
+.profile__component {
     width: 100%;
     height: 100%;
     position: absolute;
     z-index: 1;
+    background-image: url(../../images/map.png);
+    background-position: center right;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+}
+.profile__content {
+    position: absolute;
+    width: 100%;
+    height: calc(100% + -102px);
     background: hsla(20, 6%, 10%, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile__form {
+    width: 61.66%;
+    height: 63.77%;
+    background-color: white;
+    box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 60px 44px;
+    max-height: 468px;
+    max-width: 800px;
+}
+.profile_title__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+.profile_title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: #000000;
+}
+.profile_sub_title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+
+    color: #7b7b7b;
+}
+.profile__main_form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 41px;
+}
+.profile_form__container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+.form_body{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+}
+.form_container_main{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.form_card__info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.form_card_date {
+    width: 45%;
+    height: 100%;
+}
+.form_input {
+    margin-bottom: 25px;
+}
+.card__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form_card_cvc {
+    width: 45%;
+}
+.profile_card__info {
+    width: 40%;
+    height: 182px;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 27px;
+    background: #ffffff;
+    box-shadow: 0px 5px 20px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    justify-content: space-between;
+}
+.card_logo {
+    width: 33px;
+    height: 33px;
+}
+.pre_info {
+    display: flex;
+    justify-content: space-between;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height */
+
+    color: #000000;
+}
+.card_number {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 25px;
+    /* identical to box height */
+
+    color: #000000;
+}
+.card__buttom_icons {
+    display: flex;
+    justify-content: space-between;
+}
+.tech_icon {
+    position: relative;
+    display: flex;
+    width: 46px;
+    height: 28px;
+}
+.tech_icon_first {
+    position: absolute;
+}
+.tech_icon_second {
+    position: absolute;
+    left: 18px;
+}
+.save_btn {
+    border: none;
+    width: 356px;
+    height: 61px;
+    background: #fdbf5a;
+    border-radius: 70px;
+    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    line-height: 25px;
+    /* identical to box height */
+
+    color: #000000;
+    &:focus {
+        background: #ffa842;
+    }
+    &.disabled {
+        background: #d8d7d5;
+        cursor: none;
+        pointer-events: none;
+    }
+}
+.submit__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

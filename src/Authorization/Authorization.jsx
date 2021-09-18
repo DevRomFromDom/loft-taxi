@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Registration from "./Registraiton";
 import Login from "./Login";
 import styles from "./Authorization.module.scss";
 import { ReactComponent as Logo } from "../images/svg/logo.svg";
+import { Route, Switch } from "react-router-dom";
 
 const Authorization = () => {
-    const [authStatus, setAuthStatus] = useState("login");
-    const changeAuthStatus = (status)=>{ 
-        setAuthStatus(status)
-    }
     return (
         <>
             <div className={styles.authbody}>
@@ -25,11 +22,11 @@ const Authorization = () => {
                 </div>
                 <div className={styles.auth__body}>
                     <div className={styles.auth__container}>
-                        {authStatus === "login" ? (
-                            <Login changeAuthStatus={changeAuthStatus} />
-                        ) : authStatus === "registration" ? (
-                            <Registration changeAuthStatus={changeAuthStatus} />
-                        ) : null}
+                        <Switch>
+                            <Route path="/auth/login" component={Login}/>
+                            <Route path="/auth/registration" component={Registration}/>
+                        </Switch>
+                       
                     </div>
                 </div>
             </div>

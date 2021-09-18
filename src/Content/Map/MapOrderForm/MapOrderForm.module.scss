@@ -1,0 +1,77 @@
+.form__wrapper {
+    position: absolute;
+}
+.form__container {
+    margin: 59px 0px 0px 68px;
+    width: 486px;
+    height: 471px;
+    background: #ffffff;
+    box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.selectStart {
+    position: absolute;
+    &::before {
+        position: absolute;
+        content: url(../../../images/svg/Ellipse18.svg);
+        width: 14px;
+        height: 14px;
+        top: 23px;
+        left: 5px;
+    }
+}
+.selectEnd {
+    position: absolute;
+    &::before {
+        position: absolute;
+        content: url(../../../images/svg/Arrow.svg);
+        width: 16.5px;
+        height: 16.5px;
+        top: 25px;
+        left: 5px;
+    }
+}
+.select__form {
+    border-bottom: 1px solid #e0e0e0;
+}
+.sub__form {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin-top: 23px;
+    flex-direction: column;
+}
+.price__form {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.submit__btn {
+    align-self: center;
+    width: 81%;
+    margin-bottom: 33px;
+}
+.btn {
+    cursor: pointer;
+    background: #fdbf5a;
+    border-radius: 70px;
+    padding: 18px 0;
+    width: 100%;
+    border: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: #000000;
+    &.disabled {
+        background: #d8d7d5;
+        border-radius: 70px;
+        pointer-events: none;
+        cursor: none;
+    }
+}
