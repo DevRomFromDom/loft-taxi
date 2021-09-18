@@ -68,6 +68,7 @@ const LoginForm = ({ authenticate, regStatus }) => {
                             setEmail(e.target.value);
                             setError(false);
                         }}
+                        autoFocus
                     />
                 </div>
                 <div className={styles.password}>

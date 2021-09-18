@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { connect } from "react-redux";
 import { registraiton, showModalInfo, closeModalInfo } from "../../../store";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const CssTextField = withStyles({
     root: {
@@ -20,6 +22,13 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
+const schema = yup.object().shape({
+    registration: yup
+        .string("Укажите валидный Email")
+        .email("Укажите валидный Email")
+        .required(),
+});
+
 const RegistrationForm = ({
     registraiton,
     showModalInfo,
@@ -30,15 +39,22 @@ const RegistrationForm = ({
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const { register, handleSubmit } = useForm();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(schema) });
+
     useEffect(() => {
         if (regStatus === "error") {
             setRegError(true);
         }
-        return
+        return;
     }, [regStatus]);
 
-    const handleRegister = async (data) => {
+    const handleRegister = async (data, errors) => {
+        console.log(errors);
         const [regName, regSurName] = data.name.trim().split(" ");
         if (!regSurName) {
             setRegError(true);
@@ -73,23 +89,33 @@ const RegistrationForm = ({
         <form
             className={styles.login__form}
             onSubmit={handleSubmit(handleRegister)}
+            noValidate
+            autoComplete='off'
         >
             <div className={styles.email}>
                 <CssTextField
-                    {...register("registration", { required: true })}
+                    inputProps={{
+                        "data-testid": "email-label",
+                    }}
+                    {...register("registration")}
                     label='Email'
                     required
                     fullWidth
-                    error={regError}
+                    error={errors.registration ? true : regError}
                     id='email'
                     value={email}
                     onChange={(e) => {
                         setEmail(e.target.value);
                         setRegError(false);
                     }}
-                    type='email'
                     name='registration'
-                    inputProps={{ "data-testid": "email-label" }}
+                    type='email'
+                    helperText={
+                        errors.registration
+                            ? `${errors.registration.message}`
+                            : ""
+                    }
+                    autoFocus
                 />
             </div>
             <div className={styles.name}>

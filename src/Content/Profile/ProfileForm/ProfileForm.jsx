@@ -101,6 +101,7 @@ const ProfileForm = ({ card, token, closeForm }) => {
                     <div className={styles.profile_form__container}>
                         <div className={styles.form_input}>
                             <CssTextField
+                                {...register("cardName")}
                                 id='name'
                                 label='Имя пользвователя'
                                 fullWidth
@@ -108,7 +109,6 @@ const ProfileForm = ({ card, token, closeForm }) => {
                                 placeholder='Введите имя'
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                {...register("cardName", { required: true })}
                                 inputProps={{ "data-testid": "name-field" }}
                             />
                         </div>
