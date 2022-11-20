@@ -1,5 +1,6 @@
-# Getting Started with Create React App
+# Loft-taxi app
 
+App for find taxi and make way to the point.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
